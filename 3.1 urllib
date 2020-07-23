@@ -9,10 +9,12 @@
    得到这个对象一般会赋值为response 变量， 例如：
    
    (```)
+   
    import urllib.request
  
    response = urllib.request.urlopen('https://www.baidu.com')
    print(response.read().decode('utf-8'))
+   
    (```)
    
  3. 利用urlopen()方法可以实现最近本的请求发送，但如果需要在请求中加入headers等信息，则需要利用request类来构建,
@@ -23,6 +25,7 @@
     例如：
     
     (```)
+    
     from urllib import requset, parse
     
     url = 'http://httpbin.org/post'
@@ -37,6 +40,7 @@
     req = request.Requset(url=url,data=data,headers=headers,method='POST')
     response = request.urlopen(req)
     print(response.read().decode('utf-8'))
+    
     (```)
     
     *注：data 参数如果要传，必须穿bytes(字节流)类型，如果传入字典，可以先用urllib.parse 模块里的urlencode()编码*
