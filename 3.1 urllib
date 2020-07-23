@@ -1,0 +1,50 @@
+1. urllib 是Python内置的http请求库，不需额外安装，主要有一下四个模块：
+   - request: 模拟发送请求
+   - error: 异常处理
+   - parse: 工具模块，提供URL处理方法，如拆分、解析、合并等
+   - robotparser: 识别robots.txt 文件，判断那些网站可以爬，那些不可以爬
+   
+2. 使用 urllib.request.urlopen() 来发送请求，urllopen() 里传入的是url,得到的结果是
+   HTTPResponse 类型对象，包含read(),readinto(),getheader(name),getheaders()等方法，
+   得到这个对象一般会赋值为response 变量， 例如：
+   
+   (```)
+   import urllib.request
+ 
+   response = urllib.request.urlopen('https://www.baidu.com')
+   print(response.read().decode('utf-8'))
+   (```)
+   
+ 3. 利用urlopen()方法可以实现最近本的请求发送，但如果需要在请求中加入headers等信息，则需要利用request类来构建,
+    通过request,一方面可以将请求独立成一个对象，另一方面可以更加丰富和灵活的配置参数
+    
+    ` class urllib.request.Request(url,data=None,headers={},origin_req_host=None,unverifiable=False,method=None) `
+    
+    例如：
+    
+    (```)
+    from urllib import requset, parse
+    
+    url = 'http://httpbin.org/post'
+    headers = {
+      'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)',
+      'Host' : 'httpbin.org'
+    }
+    dict = {
+      'name': 'China'
+    }
+    data = bytes(parse.urlencode(dict),encoding='utf-8')
+    req = request.Requset(url=url,data=data,headers=headers,method='POST')
+    response = request.urlopen(req)
+    print(response.read().decode('utf-8'))
+    (```)
+    
+    *注：data 参数如果要传，必须穿bytes(字节流)类型，如果传入字典，可以先用urllib.parse 模块里的urlencode()编码*
+    
+  4. 高级用法，对应于cookies,代理设置等
+     Handler : 各种处理器，有专门验证登录的，又处理cookies的，又处理代理设置的，利用handler可以处理http请求中所有的事情
+     opener: urlopen() 就是urllib 提供的opener
+     
+     在登陆时，需要实例一个HTTPBasicAuthHandler对象，他需要一个HTTPPasswordMgrWithDEfaulRealm对象作为参数,这个对象利用
+     add_password()传入参数，这样就建立了一个处理验证的handler，接下来利用build_opener方法建立一个opener,再利用opener的
+     open()方法打开链接
