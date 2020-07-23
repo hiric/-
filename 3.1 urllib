@@ -1,8 +1,8 @@
 1. urllib 是Python内置的http请求库，不需额外安装，主要有一下四个模块：
-   - request: 模拟发送请求
-   - error: 异常处理
-   - parse: 工具模块，提供URL处理方法，如拆分、解析、合并等
-   - robotparser: 识别robots.txt 文件，判断那些网站可以爬，那些不可以爬
+   * request: 模拟发送请求
+   * error: 异常处理
+   * parse: 工具模块，提供URL处理方法，如拆分、解析、合并等
+   * robotparser: 识别robots.txt 文件，判断那些网站可以爬，那些不可以爬
    
 2. 使用 urllib.request.urlopen() 来发送请求，urllopen() 里传入的是url,得到的结果是
    HTTPResponse 类型对象，包含read(),readinto(),getheader(name),getheaders()等方法，
